@@ -16,12 +16,16 @@
  * limitations under the License.
  */
 
-namespace JMS\SerializerBundle\Annotation;
+namespace JMS\SerializerBundle\Tests\Fixtures;
 
-/**
- * @Annotation
- * @Target("PROPERTY")
- */
-final class Expose
+use JMS\SerializerBundle\Annotation\Groups;
+use JMS\SerializerBundle\Annotation\Type;
+
+class InvalidGroupsObject
 {
+    /**
+     * @Groups({"foo, bar"})
+     * @Type("string")
+     */
+    private $foo;
 }

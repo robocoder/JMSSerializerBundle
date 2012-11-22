@@ -18,15 +18,13 @@
 
 namespace JMS\SerializerBundle\Tests\Serializer;
 
-use JMS\SerializerBundle\Exception\RuntimeException;
-
-use JMS\SerializerBundle\Serializer\EventDispatcher\Event;
-use JMS\SerializerBundle\Serializer\EventDispatcher\EventSubscriberInterface;
-use JMS\SerializerBundle\Serializer\GraphNavigator;
 use JMS\SerializerBundle\Serializer\VisitorInterface;
-
+use JMS\SerializerBundle\Serializer\GraphNavigator;
+use JMS\SerializerBundle\Serializer\EventDispatcher\EventSubscriberInterface;
+use JMS\SerializerBundle\Serializer\EventDispatcher\Event;
 use JMS\SerializerBundle\Tests\Fixtures\Author;
 use JMS\SerializerBundle\Tests\Fixtures\AuthorList;
+use JMS\SerializerBundle\Exception\RuntimeException;
 
 class JsonSerializationTest extends BaseSerializationTest
 {

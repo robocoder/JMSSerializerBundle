@@ -79,6 +79,10 @@ class YamlSerializationVisitor extends AbstractVisitor
         return $v;
     }
 
+    /**
+     * @param array $data
+     * @param array $type
+     */
     public function visitArray($data, array $type)
     {
         $count = $this->writer->changeCount;

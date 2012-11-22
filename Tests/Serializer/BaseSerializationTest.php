@@ -31,11 +31,7 @@ use JMS\SerializerBundle\Serializer\Construction\UnserializeObjectConstructor;
 use JMS\SerializerBundle\Serializer\Handler\ArrayCollectionHandler;
 use JMS\SerializerBundle\Serializer\Handler\ConstraintViolationHandler;
 use JMS\SerializerBundle\Serializer\Handler\DateTimeHandler;
-use JMS\SerializerBundle\Serializer\Handler\DeserializationHandlerInterface;
-use JMS\SerializerBundle\Serializer\Handler\DoctrineProxyHandler;
 use JMS\SerializerBundle\Serializer\Handler\FormErrorHandler;
-use JMS\SerializerBundle\Serializer\Handler\ObjectBasedCustomHandler;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
 use JMS\SerializerBundle\Serializer\JsonDeserializationVisitor;
 use JMS\SerializerBundle\Serializer\JsonSerializationVisitor;
 use JMS\SerializerBundle\Serializer\Naming\CamelCaseNamingStrategy;
@@ -58,6 +54,7 @@ use JMS\SerializerBundle\Tests\Fixtures\CurrencyAwarePrice;
 use JMS\SerializerBundle\Tests\Fixtures\CustomDeserializationObject;
 use JMS\SerializerBundle\Tests\Fixtures\GetSetObject;
 use JMS\SerializerBundle\Tests\Fixtures\GroupsObject;
+use JMS\SerializerBundle\Tests\Fixtures\InvalidGroupsObject;
 use JMS\SerializerBundle\Tests\Fixtures\IndexedCommentsBlogPost;
 use JMS\SerializerBundle\Tests\Fixtures\InlineParent;
 use JMS\SerializerBundle\Tests\Fixtures\InitializedObjectConstructor;
@@ -78,7 +75,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Yaml\Inline;
 
 abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
 {
@@ -556,6 +552,17 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->setGroups(array('Default'));
         $this->assertEquals($this->getContent('groups_default'), $this->serializer->serialize($groupsObject, $this->getFormat()));
+    }
+
+    /**
+     * @expectedException JMS\SerializerBundle\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Invalid group name "foo, bar" on "JMS\SerializerBundle\Tests\Fixtures\InvalidGroupsObject->foo", did you mean to create multiple groups?
+     */
+    public function testInvalidGroupName()
+    {
+        $groupsObject = new InvalidGroupsObject();
+
+        $this->serializer->serialize($groupsObject, $this->getFormat());
     }
 
     public function testVirtualProperty()

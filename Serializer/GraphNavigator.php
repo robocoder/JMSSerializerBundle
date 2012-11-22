@@ -88,7 +88,7 @@ final class GraphNavigator
      * Called for each node of the graph that is being traversed.
      *
      * @param mixed $data the data depends on the direction, and type of visitor
-     * @param array|null $type array has the format ["name" => string, "params" => array]
+     * @param null|array $type array has the format ["name" => string, "params" => array]
      * @param VisitorInterface $visitor
      *
      * @return mixed the return value depends on the direction, and type of visitor
