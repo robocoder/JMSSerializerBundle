@@ -62,29 +62,17 @@ class DateTimeHandler implements SubscribingHandlerInterface
 
     public function serializeDateTimeToXml(XmlSerializationVisitor $visitor, $date, array $type)
     {
-        if ($date === null) {
-            return $visitor->visitNull(null, $type);
-        }
-
-        return $visitor->visitString($date->format($this->getFormat($type)), $type);
+        return $this->serialize($visitor, $date, $type);
     }
 
     public function serializeDateTimeToYml(YamlSerializationVisitor $visitor, $date, array $type)
     {
-        if ($date === null) {
-            return $visitor->visitNull(null, $type);
-        }
-
-        return $visitor->visitString($date->format($this->getFormat($type)), $type);
+        return $this->serialize($visitor, $date, $type);
     }
 
     public function serializeDateTimeToJson(JsonSerializationVisitor $visitor, $date, array $type)
     {
-        if ($date === null) {
-            return $visitor->visitNull(null, $type);
-        }
-
-        return $visitor->visitString($date->format($this->getFormat($type)), $type);
+        return $this->serialize($visitor, $date, $type);
     }
 
     public function deserializeDateTimeFromXml(XmlDeserializationVisitor $visitor, $data, array $type)
@@ -105,6 +93,15 @@ class DateTimeHandler implements SubscribingHandlerInterface
         }
 
         return $this->parseDateTime($data, $type);
+    }
+
+    private function serialize($visitor, $date, array $type)
+    {
+        if ($date === null) {
+            return $visitor->visitNull(null, $type);
+        }
+
+        return $visitor->visitString($date->format($this->getFormat($type)), $type);
     }
 
     private function parseDateTime($data, array $type)
